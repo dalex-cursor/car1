@@ -1,0 +1,205 @@
+body {
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    margin: 0;
+    background-color: #f0f0f0;
+    /* Force horizontal scroll if content overflows */
+    overflow-x: auto;
+    /* Adjust min-width based on new column widths */
+    min-width: calc(5 * 150px + 750px + 5 * 15px); /* Approx A/B/C/D/H + EFG + gaps */
+}
+
+.main-container {
+    display: flex;
+    padding: 10px;
+    gap: 10px; /* Space between main columns */
+    min-height: 95vh; /* Ensure containers take up height */
+    align-items: stretch; /* Make columns equal height */
+    width: max-content; /* Allow container to grow based on content */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 4px;
+    color: #ffffff; /* Default font color */
+    flex-shrink: 0; /* Prevent containers from shrinking */
+}
+
+/* --- Width for A,B,C,H determined by content --- */
+.container-a, .container-b, .container-c, .container-d, .container-h {
+    /* flex-basis is auto by default */
+    min-width: 116px; /* Set a minimum reasonable width based on card/padding */
+	max-Height: 750px;
+}
+
+/* --- Width for E/F/G column (Increased) --- */
+.efg-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between E, F, G */
+    flex-basis: 720px; /* <-- UPDATED VALUE */
+    flex-shrink: 0;
+}
+.container-e, .container-f {
+   flex-grow: 1; /* Allow E, F, G to take available space in the column */
+   max-width: 700px;
+   max-Height: 210px;
+}
+.container-g {
+   flex-grow: 1; /* Allow E, F, G to take available space in the column */
+   max-width: 700px;
+   max-Height: 140px;
+}
+
+/* Container Specific Backgrounds & Headers */
+.container-a { background-color: #3f3f3f; }
+.container-b { background-color: #790000; }
+.container-c { background-color: #c95800; }
+.container-d { background-color: #007837; }
+.container-e { background-color: #007837; }
+.container-f { background-color: #00528d; }
+.container-g { background-color: #af3da3; }
+.container-h { background-color: #7f7f7f; }
+
+.container-header {
+    margin: 0 0 8px 0px;
+    padding: 4px 0px;
+    text-align: center;
+    font-size: 1.1em;
+    border-radius: 3px;
+    font-weight: bold;
+	max-width:800px;
+}
+
+.header-a { background-color: #7f7f7f; }
+.header-b { background-color: #FF5050; }
+.header-c { background-color: #ff8f38; }
+.header-d { background-color: #00cf5e; }
+.header-e { background-color: #00cf5e; }
+.header-f { background-color: #0081dd; }
+.header-g { background-color: #f95ae9; }
+.header-h { background-color: #bfbfbf; }
+
+
+/* Card List (for A, B, C, H) */
+.card-list {
+    flex-grow: 1; /* Take remaining space in container */
+    min-height: 150px; /* Minimum height */
+    overflow-y: auto; /* Allow vertical scrolling */
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background */
+    border-radius: 4px;
+    width: 120px; /* Explicit width based on card + padding (100+10+10) */
+    box-sizing: content-box; /* Padding adds to this width */
+}
+
+/* Slot Area (for E, F, G) */
+.slot-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px; /* Affects available width for slot-row */
+}
+
+.slot-row {
+    display: flex;
+    gap: 5px; /* Space between slots */
+    flex-wrap: wrap; /* Allow wrapping just in case container is too narrow */
+    justify-content: center; /* Center slots if row isn't full */
+    /* Width calculation ensures 6 slots fit without wrapping */
+}
+
+.slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border-radius: 4px;
+    width: 110px; /* Fixed width for slot */
+    box-sizing: border-box; /* Padding included in width */
+}
+.slot-group-e { background-color: #005a29; }
+.slot-group-f { background-color: #003f6c; }
+.slot-group-g { background-color: #97358d; }
+
+.slot-name {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 4px 4px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 0.9em;
+    width: 90%;
+    cursor: text; /* Indicate editable */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.slot-dropzone {
+    width: 100px; /* Match card width */
+    min-height: 40px; /* Height to drop into */
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    display: flex; /* To center potential card */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease; /* Smooth feedback */
+    box-sizing: border-box;
+}
+.slot-dropzone:empty { /* Style when empty */
+     border-style: dashed;
+}
+.slot-dropzone:not(:empty) { /* Style when holding a card */
+    border-style: solid; /* Change border when card is inside */
+    border-color: transparent; /* Hide border when card is inside */
+}
+
+
+/* Card Styling */
+.card {
+    background-color: #a5a5a5; /* Default/Group G */
+    color: #ffffff;
+    padding: 4px 4px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    cursor: grab;
+    font-size: 0.95em;
+    text-align: center;
+    width: 100px; /* Fixed width */
+    box-sizing: border-box; /* Include padding in width */
+    user-select: none; /* Prevent text selection during drag */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    overflow: hidden; /* Prevent long text overflow */
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Add ... for long text */
+    /* Make card align itself center within the slot-dropzone if needed */
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Specific Card Colors based on group */
+.card-group-a { background-color: #7f7f7f; }
+.card-group-b { background-color: #de0000; }
+.card-group-c { background-color: #ff7000; }
+.card-group-d { background-color: #00b050; }
+.card-group-e { background-color: #00b050; }
+.card-group-f { background-color: #0070c0; }
+.card-group-g { background-color: #d64bc8; }
+.card-group-h { background-color: #a5a5a5; }
+
+
+/* Dragging Feedback */
+.card.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+/* Drop Target Feedback */
+.droppable.drag-over {
+    background-color: rgba(255, 255, 255, 0.3) !important; /* Highlight droppable area */
+}
+.slot-dropzone.drag-over {
+     border-style: solid !important;
+     border-color: #fff !important; /* Highlight slot border */
+}
